@@ -23,12 +23,13 @@ os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 # ---------------------
 # Load preprocessed data
 # ---------------------
-
+all_monthly_data = os.path.join(os.getcwd(),"Data","all_months_occupancy_probability_distribution.pkl")
+monthly_util = os.path.join(os.getcwd(),"Data","monthly_utilisation_when_occupied_vs_occupancy.pkl")
 @st.cache_data
 def load_data():
     # Replace with paths to your processed files if needed
-    melted = pd.read_pickle("all_months_occupancy_probability_distribution.pkl")
-    df = pd.read_pickle("monthly_utilisation_when_occupied_vs_occupancy.pkl")
+    melted = pd.read_pickle(all_monthly_data)
+    df = pd.read_pickle(monthly_util)
     return melted, df
 
 melted, df = load_data()
