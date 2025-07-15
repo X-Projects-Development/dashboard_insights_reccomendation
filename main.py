@@ -25,7 +25,9 @@ os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 def load_data():
     # Replace with paths to your processed files if needed
     melted = pd.read_pickle("Data/all_months_occupancy_probability_distribution.pkl")
-    df = pd.read_pickle("Data/monthly_utilisation_when_occupied_vs_occupancy.pkl")
+    df = pd.read_pickle("Data/hourly_utilisation_occupancy_environmental_metirc.pkl")
+    df = df.groupby(['Floor Name', 'lvl', 'Workspace Name', 'Workspace Type', 'Space Capacity',
+     'Workspace_Capacity_Category', 'Month', 'Month Name']).agg(Monthly_Occupancy = ('Occupancy%', 'mean'), Monthly_Utilisation_when_Occupied_mean = ('Utilisation_mean', 'mean')).reset_index()
     return melted, df
 
 melted, df = load_data()
@@ -68,7 +70,11 @@ cisco_palette = {
 # ---------------------
 melted_filtered = melted[melted["Workspace_Capacity_Category"] == selected_category]
 df_filtered = df[df["Workspace_Capacity_Category"] == selected_category]
-
+df_filtered['Monthly_Occupancy'] = df_filtered['Monthly_Occupancy'].round(2)
+df_filtered['Monthly_Utilisation_when_Occupied_mean'] = df_filtered['Monthly_Utilisation_when_Occupied_mean'].round(2)
+df_filtered['Monthly_Occupancy_label'] = df_filtered['Monthly_Occupancy'].astype(str) + '%'
+df_filtered['Monthly_Utilisation_when_Occupied_label'] = df_filtered['Monthly_Utilisation_when_Occupied_mean'].astype(str) + '%'
+df_filtered['Space_Capacity_label'] = df_filtered['Space Capacity'].astype(str) + ' seats'
 
 st.title("Cisco Space Occupancy Analysis - SFO12")
 
@@ -189,18 +195,19 @@ with st.container():
 
 st.header(f"Monthly Utilisation vs Occupancy – {selected_category}")
 
+       
 # Compute medians (over the whole dataset)
 # median_util = df_filtered["Monthly_Utilisation"].median()
-median_occ = round(df_filtered["Monthly_Occupancy%"].median(),0)
+median_occ = round(df_filtered["Monthly_Occupancy"].median(),0)
 median_util = round(df_filtered["Monthly_Utilisation_when_Occupied_mean"].median(),0)
 max_yaxis = df_filtered["Monthly_Utilisation_when_Occupied_mean"].max()
 min_yaxis = df_filtered["Monthly_Utilisation_when_Occupied_mean"].min()
-max_xaxis = df_filtered["Monthly_Occupancy%"].max()
-min_xaxis = df_filtered["Monthly_Occupancy%"].min()
+max_xaxis = df_filtered["Monthly_Occupancy"].max()
+min_xaxis = df_filtered["Monthly_Occupancy"].min()
 
 fig2 = px.scatter(
     df_filtered,
-    x="Monthly_Occupancy%",
+    x="Monthly_Occupancy",
     y="Monthly_Utilisation_when_Occupied_mean",
     color="Workspace_Capacity_Category",
     size="Space Capacity",
@@ -218,16 +225,16 @@ fig2 = px.scatter(
         "Space_Capacity_label": True,
         "Floor Name": True,
         "Monthly_Occupancy_label": True,
-        "Utilisation_when_Occupied_label": True,
-        "Max_Occupancy_label": True,
-        "Avg_Occupancy_label": True,
-        "Median_Occupancy_label": True,
-        "Occupancy_90_label": True,
-        "Occupancy_85_label": True,
-        "Occupancy_80_label": True,
-        "Avg_Dwell_Time_label": True,
+        "Monthly_Utilisation_when_Occupied_label": True,
+        # "Max_Occupancy_label": False,
+        # "Avg_Occupancy_label": False,
+        # "Median_Occupancy_label": False,
+        # "Occupancy_90_label": False,
+        # "Occupancy_85_label": False,
+        # "Occupancy_80_label": False,
+        # "Avg_Dwell_Time_label": False,
         # Hide default fields
-        "Monthly_Occupancy%": False,
+        "Monthly_Occupancy": False,
         "Monthly_Utilisation_when_Occupied_mean": False,
         "Space Capacity": False,
         "Workspace Name": False
@@ -344,7 +351,7 @@ def generate_insight_and_recommendation_utilisation_occupancy(df: pd.DataFrame, 
     parser = JsonOutputParser()
     total_num_rooms = df['Workspace Name'].nunique()
     df = df[['Month Name', 'Workspace Name',
-             'Monthly_Utilisation_when_Occupied_mean','Monthly_Occupancy%']]
+             'Monthly_Utilisation_when_Occupied_mean','Monthly_Occupancy']]
     # rename column
     df.columns = ['Month Name', 'Workspace Name', 'Utilisation', 'Occupancy']
     prompt_template = PromptTemplate.from_template(
