@@ -170,6 +170,7 @@ def generate_insight_and_recommendation_consecutive_rooms(df: pd.DataFrame, capa
 
 new_df1 = melted.sort_values(["Workspace_Capacity_Category","Rooms_Occupied"])
 
+
 # @st.cache_data(show_spinner="Generating insight...")
 # 1. Run the AI insight generation
 with st.spinner("Generating AI Insight and Recommendation..."):
@@ -195,7 +196,7 @@ with st.container():
 
 st.header(f"Monthly Utilisation vs Occupancy – {selected_category}")
 
-       
+
 # Compute medians (over the whole dataset)
 # median_util = df_filtered["Monthly_Utilisation"].median()
 median_occ = round(df_filtered["Monthly_Occupancy"].median(),0)
