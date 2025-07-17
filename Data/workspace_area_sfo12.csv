@@ -1,0 +1,133 @@
+Building_name,Floor Name,Workspace Name,Workspace Type,Area_Sqft
+SFO12,5th Floor,Suppenkuche,Meeting Room,86
+SFO12,1st Floor,Lazy Bear,SMART-ROOM,1199
+SFO12,2nd Floor,Alcatraz,SMART-ROOM,335
+SFO12,2nd Floor,Avengers,SMART-ROOM,172
+SFO12,2nd Floor,Baxter Building,SMART-ROOM,86
+SFO12,2nd Floor,Cole Valley,SMART-ROOM,86
+SFO12,2nd Floor,Dogpatch,SMART-ROOM,80
+SFO12,2nd Floor,Dolores Park,SMART-ROOM,172
+SFO12,2nd Floor,Embarcadero,SMART-ROOM,80
+SFO12,2nd Floor,Exploratorium,SMART-ROOM,59
+SFO12,2nd Floor,Ferry Building,SMART-ROOM,61
+SFO12,2nd Floor,Fortress of Solitude,SMART-ROOM,86
+SFO12,2nd Floor,Glen Canyon,SMART-ROOM,88
+SFO12,2nd Floor,Golden Gate,SMART-ROOM,80
+SFO12,2nd Floor,Haight Street,SMART-ROOM,172
+SFO12,2nd Floor,Hayes Valley,Meeting Room,30
+SFO12,2nd Floor,Hunters Point,Meeting Room,31
+SFO12,2nd Floor,Kyoto,SMART-ROOM,86
+SFO12,2nd Floor,Lombard Street,SMART-ROOM,552
+SFO12,2nd Floor,Marina,Meeting Room,30
+SFO12,2nd Floor,Mount Tam,SMART-ROOM,172
+SFO12,2nd Floor,Nob Hill,SMART-ROOM,234
+SFO12,2nd Floor,Noe Valley,SMART-ROOM,80
+SFO12,2nd Floor,North Beach,SMART-ROOM,80
+SFO12,2nd Floor,Ocean Beach,SMART-ROOM,80
+SFO12,2nd Floor,Orpheum,SMART-ROOM,44
+SFO12,2nd Floor,Painted Ladies,SMART-ROOM,44
+SFO12,2nd Floor,Panhandle,Meeting Room,86
+SFO12,2nd Floor,Parker's Lab,Meeting Room,80
+SFO12,2nd Floor,Pier 39,SMART-ROOM,172
+SFO12,2nd Floor,Potrero Hill,SMART-ROOM,86
+SFO12,2nd Floor,Richmond,SMART-ROOM,80
+SFO12,2nd Floor,Russian Hill,SMART-ROOM,44
+SFO12,2nd Floor,SOMA,SMART-ROOM,80
+SFO12,2nd Floor,Sea Cliff,SMART-ROOM,44
+SFO12,2nd Floor,Shield,SMART-ROOM,86
+SFO12,2nd Floor,Stark Lab,SMART-ROOM,103
+SFO12,2nd Floor,Stinson Beach,Meeting Room,80
+SFO12,2nd Floor,Sutro Baths,SMART-ROOM,86
+SFO12,2nd Floor,Telegraph Hill,SMART-ROOM,172
+SFO12,2nd Floor,Tenderloin,SMART-ROOM,86
+SFO12,2nd Floor,Themsycira,SMART-ROOM,80
+SFO12,2nd Floor,Treasure Island,SMART-ROOM,44
+SFO12,2nd Floor,Union Square,Meeting Room,1411
+SFO12,3rd Floor,10.5,Meeting Room,78
+SFO12,3rd Floor,48 Hours,Meeting Room,78
+SFO12,3rd Floor,Always Be My Maybe,SMART-ROOM,586
+SFO12,3rd Floor,Ant Man,Meeting Room,94
+SFO12,3rd Floor,Barbary Coast,SMART-ROOM,195
+SFO12,3rd Floor,Bullitt,SMART-ROOM,199
+SFO12,3rd Floor,Escape From Alcatraz,SMART-ROOM,199
+SFO12,3rd Floor,Fog Over Frisco,SMART-ROOM,199
+SFO12,3rd Floor,Godzilla,SMART-ROOM,199
+SFO12,3rd Floor,Hook,SMART-ROOM,113
+SFO12,3rd Floor,Inside Out,Meeting Room,1408
+SFO12,3rd Floor,Invasion Of The Body Snatchers,Meeting Room,218
+SFO12,3rd Floor,La Mission,SMART-ROOM,218
+SFO12,3rd Floor,Money Ball,SMART-ROOM,148
+SFO12,3rd Floor,Mrs. Doubtfire,SMART-ROOM,344
+SFO12,3rd Floor,Pacific Rim,SMART-ROOM,114
+SFO12,3rd Floor,San Andreas,SMART-ROOM,91
+SFO12,3rd Floor,Silicon Valley,Meeting Room,87
+SFO12,3rd Floor,Sister Act,SMART-ROOM,584
+SFO12,3rd Floor,Star Trek IV,SMART-ROOM,131
+SFO12,3rd Floor,Streets Of San Francisco,SMART-ROOM,131
+SFO12,3rd Floor,The Birds,Meeting Room,213
+SFO12,3rd Floor,The House On Telegraph Hill,SMART-ROOM,113
+SFO12,3rd Floor,The Last Waltz,SMART-ROOM,218
+SFO12,3rd Floor,The Pursuit Of Happiness,Meeting Room,113
+SFO12,3rd Floor,The Rock,SMART-ROOM,160
+SFO12,3rd Floor,Up,SMART-ROOM,172
+SFO12,3rd Floor,Vertigo,Meeting Room,981
+SFO12,3rd Floor,Who Framed Roger Rabbit,Meeting Room,117
+SFO12,4th Floor,Anchor Steam,SMART-ROOM,309
+SFO12,4th Floor,Atwater Tavern,SMART-ROOM,261
+SFO12,4th Floor,Auntie Aprils,SMART-ROOM,221
+SFO12,4th Floor,Bacon Bacon,SMART-ROOM,200
+SFO12,4th Floor,Brown Sugar Kitchen,Meeting Room,224
+SFO12,4th Floor,Burma Superstar,Meeting Room,202
+SFO12,4th Floor,Curry Up Now,SMART-ROOM,298
+SFO12,4th Floor,El Pipila,SMART-ROOM,216
+SFO12,4th Floor,Gialana,SMART-ROOM,327
+SFO12,4th Floor,Isla Vida,Meeting Room,1142
+SFO12,4th Floor,Jays,SMART-ROOM,320
+SFO12,4th Floor,Liholiho Yacht Club,SMART-ROOM,239
+SFO12,4th Floor,Little Skillet,SMART-ROOM,102
+SFO12,4th Floor,Minnie Bell's Soul Kitchen,Meeting Room,100
+SFO12,4th Floor,Nightbird,Meeting Room,95
+SFO12,4th Floor,Powder,SMART-ROOM,95
+SFO12,4th Floor,Pye,SMART-ROOM,88
+SFO12,4th Floor,Senor Sisig,SMART-ROOM,84
+SFO12,4th Floor,The Ramp,Meeting Room,91
+SFO12,4th Floor,Tommy's Joynt,SMART-ROOM,87
+SFO12,4th Floor,Torraku Ramen,SMART-ROOM,105
+SFO12,4th Floor,Wise Sons,Meeting Room,97
+SFO12,5th Floor,Ano Nuevo,SMART-ROOM,581
+SFO12,5th Floor,Antelope Valley,Meeting Room,88
+SFO12,5th Floor,Big Basin,SMART-ROOM,186
+SFO12,5th Floor,Brannan Island,SMART-ROOM,210
+SFO12,5th Floor,Calveras,SMART-ROOM,112
+SFO12,5th Floor,Carlsbad,SMART-ROOM,117
+SFO12,5th Floor,Caspar Headlands,SMART-ROOM,214
+SFO12,5th Floor,Channel Islands,SMART-ROOM,200
+SFO12,5th Floor,Corona Del Mar,SMART-ROOM,200
+SFO12,5th Floor,Crystal Cove,Meeting Room,209
+SFO12,5th Floor,Delta Meadows,SMART-ROOM,110
+SFO12,5th Floor,Emerald Bay,SMART-ROOM,104
+SFO12,5th Floor,Estero Bluffs,SMART-ROOM,115
+SFO12,5th Floor,Folsom Lake,SMART-ROOM,112
+SFO12,5th Floor,Half Moon Bay,Meeting Room,547
+SFO12,5th Floor,Huddle Room - 522,Meeting Room,145
+SFO12,5th Floor,Joshua Tree,SMART-ROOM,264
+SFO12,5th Floor,King's Beach,Meeting Room,130
+SFO12,5th Floor,Lake Oroville,Meeting Room,70
+SFO12,5th Floor,Lighthouse Field,Meeting Room,77
+SFO12,5th Floor,Malibu Creek,Meeting Room,79
+SFO12,5th Floor,Mandalay Beach,Meeting Room,77
+SFO12,5th Floor,Mojave,SMART-ROOM,237
+SFO12,5th Floor,Mt. Whitney,Meeting Room,447
+SFO12,5th Floor,Muir Woods,Meeting Room,1042
+SFO12,5th Floor,Olompali Park,Meeting Room,78
+SFO12,5th Floor,Palomar Mountain,Meeting Room,78
+SFO12,5th Floor,Pelican Beach,SMART-ROOM,88
+SFO12,5th Floor,Petaluma Adobe,SMART-ROOM,86
+SFO12,5th Floor,Pismo Beach,SMART-ROOM,130
+SFO12,5th Floor,Placerita Canyon Toronado,SMART-ROOM,124
+SFO12,5th Floor,Point Reyes,SMART-ROOM,260
+SFO12,5th Floor,Russian River,SMART-ROOM,130
+SFO12,5th Floor,Silver Strand,SMART-ROOM,101
+SFO12,5th Floor,Tahoe,SMART-ROOM,100
+SFO12,5th Floor,Torrey Pines,Meeting Room,87
+SFO12,5th Floor,Yosemite,SMART-ROOM,100
