@@ -10,6 +10,7 @@ from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 import pandas as pd
 import dotenv
+
 dotenv.load_dotenv()
 
 # Load API keys
@@ -183,7 +184,7 @@ with st.spinner("Generating AI Insight and Recommendation..."):
 with st.container():
     st.markdown(f"""
     <div style='padding: 1rem; background-color: #f0f8ff; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);'>
-        <h4 style='margin-bottom: 0.5rem;'>🔍 AI Insight</h4>
+        <h4 style='margin-bottom: 0.5rem;'>🔍 GenAI Summary</h4>
         <p style='font-size: 1rem;'>{insight_text1}</p>
         <h4 style='margin-top: 1rem; margin-bottom: 0.5rem;'>✅ Recommendation</h4>
         <p style='font-size: 1rem;'>{recommendation_text1}</p>
@@ -413,9 +414,22 @@ with st.spinner("Generating AI Insight and Recommendation..."):
 with st.container():
     st.markdown(f"""
     <div style='padding: 1rem; background-color: #f0f8ff; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);'>
-        <h4 style='margin-bottom: 0.5rem;'>🔍 AI Insight</h4>
+        <h4 style='margin-bottom: 0.5rem;'>🔍 GenAI Summary</h4>
         <p style='font-size: 1rem;'>{insight_text2}</p>
         <h4 style='margin-top: 1rem; margin-bottom: 0.5rem;'>✅ Recommendation</h4>
         <p style='font-size: 1rem;'>{recommendation_text2}</p>
     </div>
     """, unsafe_allow_html=True)
+
+
+
+# Main area: Metric Definitions
+with st.sidebar.expander("Metric Definitions", expanded=False):
+    st.markdown("""
+    **Occupancy (%):**
+    The average percentage of time a workspace is occupied during the selected Days & Hours.
+
+    **Utilisation (%):**
+    The average proportion of seat usage during hours when the space is occupied. This reflects how intensively the space is used **when** it's in use, not just whether it's occupied.
+
+   """)
