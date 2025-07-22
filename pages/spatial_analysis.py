@@ -69,13 +69,14 @@ def analyze_floor_plan(floor_table,
     if metric == 'occ_&_util':
       floor_table = floor_table[['name', 'Space_Capacity_label', 'Workspace_Capacity_Category',
                                   'Monthly_Occupancy','Monthly_Utilisation','zone']].reset_index(drop=True)
+      st.write(floor_table.to_markdown())
       prompt = ChatPromptTemplate.from_messages([
           ("system", "You are a workplace analytics expert. Respond ONLY in JSON."),
           ("human", """ Analyze the attached floor plan chart (image) for Floor {floor}.
 
 Context:
 - Workspaces are color-coded based on the following thresholds:
-  - Utilization: {utilisation_threshold}% 
+  - Utilization: {utilisation_threshold}%
   - Occupancy: {occupancy_threshold}%
 - Definitions:
   - **Utilization**: Ratio of number of people occupying a workspace to its seating capacity.
@@ -347,7 +348,7 @@ def plot_metric_map_with_ai_insight(
 
     # Add basemap
     ctx.add_basemap(ax, source=ctx.providers.CartoDB.Positron, crs=gdf_filtered.crs.to_string())
-    
+
     # Get axis bounds
     x_min, x_max = ax.get_xlim()
     y_min, y_max = ax.get_ylim()
@@ -501,7 +502,7 @@ def geojson_load_data(selected_weekday,selected_hour):
     # round off and add labels
     df_agg['Monthly_Utilisation'] = df_agg['Monthly_Utilisation'].round(0).astype(str) + '%'
     df_agg['Monthly_Occupancy'] = df_agg['Monthly_Occupancy'].round(0).astype(str) + '%'
-    df_agg['Space_Capacity_label'] = df_agg['Space Capacity'].round(0).astype(str) + ' seats'
+    df_agg['Space_Capacity_label'] = df_agg['Space Capacity'].astype(int).astype(str) + ' seats'
     # df_agg['Monthly_Dwell_Time'] = df_agg['Avg_Dwell_Time'].round(0).astype(str) + ' min'
 
     gdf['lvl'] = gdf['lvl'].astype(str)
@@ -573,6 +574,134 @@ def geojson_load_data(selected_weekday,selected_hour):
 
     return gdf_mod
 
+
+########################### DELETE ###########################
+def geojson_load_data(selected_weekday,selected_hour):
+    # Replace with paths to your processed files if needed
+    df = pd.read_pickle("Data/hourly_utilisation_occupancy_environmental_metirc.pkl")
+    gdf = gpd.read_file( "Data/SFO12.geojson")
+    # df_co2_humidity_temp_agg = pd.read_pickle("df_co2_humidity_temp_agg.pkl")
+    df_area = pd.read_csv("Data/workspace_area_sfo12.csv")
+
+    df['lvl'] = df['lvl'].astype(str)
+    df_agg = df.copy()
+    # df_agg = df.loc[np.logical_and(df['Day Name'].isin(selected_weekday),
+    #                                df['Hour'].isin(selected_hour))].groupby(['Floor Name', 'lvl', 'Workspace Name', 'Workspace Type',
+    #                     'Space Capacity', 'Workspace_Capacity_Category','Day Name', 'Hour', 'Date', 'Month'
+    #                 ]).agg({
+    #                     'Occupancy%': 'mean',
+    #                     'Utilisation_mean': 'mean',
+    #                     'Average_CO2': 'median',
+    #                     'Average_Temp': 'median',
+    #                     'Average_Humidity': 'median',
+    #                     'Average_ApparentTemp': 'median',
+    #                     'CO2_90percentile': lambda x: x.quantile(0.9),
+    #                     'Temp_90percentile': lambda x: x.quantile(0.9),
+    #                     'Humidity_90percentile': lambda x: x.quantile(0.9),
+    #                     'ApparentTemp_90percentile': lambda x: x.quantile(0.9)
+    #                 }).rename(columns={
+    #                     'Occupancy%': 'Monthly_Occupancy',
+    #                     'Utilisation_mean': 'Monthly_Utilisation',
+    #                     'Average_CO2': 'Co2(ppm)',
+    #                     'Average_Temp': 'Temp(C)',
+    #                     'Average_Humidity': 'Humidity(%)',
+    #                     'Average_ApparentTemp': 'ApparentTemp(C)',
+    #                     'CO2_90percentile': 'Co2(ppm)_90th_percentile',
+    #                     'Temp_90percentile': 'Temp(C)_90th_percentile',
+    #                     'Humidity_90percentile': 'Humidity(%)_90th_percentile',
+    #                     'ApparentTemp_90percentile': 'ApparentTemp(C)_90th_percentile'
+    #                 }).reset_index()
+    # rename columns names
+    df_agg = df_agg.rename(columns={'Occupancy%': 'Monthly_Occupancy',
+                        'Utilisation_mean': 'Monthly_Utilisation',
+                        'Average_CO2': 'Co2(ppm)',
+                        'Average_Temp': 'Temp(C)',
+                        'Average_Humidity': 'Humidity(%)',
+                        'Average_ApparentTemp': 'ApparentTemp(C)',
+                        'CO2_90percentile': 'Co2(ppm)_90th_percentile',
+                        'Temp_90percentile': 'Temp(C)_90th_percentile',
+                        'Humidity_90percentile': 'Humidity(%)_90th_percentile',
+                        'ApparentTemp_90percentile': 'ApparentTemp(C)_90th_percentile'})
+    # round off and add labels
+    df_agg['Monthly_Utilisation'] = df_agg['Monthly_Utilisation'].round(0).astype(str) + '%'
+    df_agg['Monthly_Occupancy'] = df_agg['Monthly_Occupancy'].round(0).astype(str) + '%'
+    df_agg['Space_Capacity_label'] = df_agg['Space Capacity'].astype(int).astype(str) + ' seats'
+    # df_agg['Monthly_Dwell_Time'] = df_agg['Avg_Dwell_Time'].round(0).astype(str) + ' min'
+
+    gdf['lvl'] = gdf['lvl'].astype(str)
+    # clean names
+    df_agg['Workspace Name'] = (df_agg['Workspace Name'].astype(str).str.strip().str.lower().str.replace(r'\s+', ' ', regex=True)) # collapse multiple spaces
+    gdf['name'] = (gdf['name'].astype(str).str.strip().str.lower().str.replace(r'\s+', ' ', regex=True) ) # collapse multiple spaces
+    df_area['Workspace Name'] = (df_area['Workspace Name'].astype(str).str.strip().str.lower().str.replace(r'\s+', ' ', regex=True)) # collapse multiple spaces
+    # df_co2_humidity_temp_agg['Workspace Name'] = (df_co2_humidity_temp_agg['Workspace Name'].astype(str).str.strip().str.lower().str.replace(r'\s+', ' ', regex=True)) # collapse multiple spaces
+
+
+    df_area["lvl"] = df_area["Floor Name"].apply(extract_floor_number)
+
+
+    # round off numbers (dont add unit if nan)
+    # Apparent Temp
+    df_agg['ApparentTemp(C)'] = df_agg['ApparentTemp(C)'].apply(
+        lambda x: f"{x:.1f} C" if pd.notnull(x) else x
+    )
+    df_agg['ApparentTemp(C)_90th_percentile'] = df_agg['ApparentTemp(C)_90th_percentile'].apply(
+        lambda x: f"{x:.1f} C" if pd.notnull(x) else x
+    )
+
+    # Humidity
+    df_agg['Humidity(%)'] = df_agg['Humidity(%)'].apply(
+        lambda x: f"{x:.1f}%" if pd.notnull(x) else x
+    )
+    df_agg['Humidity(%)_90th_percentile'] = df_agg['Humidity(%)_90th_percentile'].apply(
+        lambda x: f"{x:.1f}%" if pd.notnull(x) else x
+    )
+
+    # Temperature
+    df_agg['Temp(C)'] = df_agg['Temp(C)'].apply(
+        lambda x: f"{x:.1f} C" if pd.notnull(x) else x
+    )
+    df_agg['Temp(C)_90th_percentile'] = df_agg['Temp(C)_90th_percentile'].apply(
+        lambda x: f"{x:.1f} C" if pd.notnull(x) else x
+    )
+
+    # CO2
+    df_agg['Co2(ppm)'] = df_agg['Co2(ppm)'].apply(
+        lambda x: f"{x:.0f} ppm" if pd.notnull(x) else x
+    )
+    df_agg['Co2(ppm)_90th_percentile'] = df_agg['Co2(ppm)_90th_percentile'].apply(
+        lambda x: f"{x:.0f} ppm" if pd.notnull(x) else x
+    )
+
+    df_area['Area_Sqft'] = df_area['Area_Sqft'].apply(
+        lambda x: f"{round(x):.0f} sqft" if pd.notnull(x) else x
+    )
+
+    gdf = gdf.loc[gdf['type'] != 'marker',].reset_index(drop=True)
+    # Saving files
+    gdf.to_csv("/content/geojson_df.csv",index=False)
+    df_agg.to_csv("/content/sfo_12_monthly_agg.csv",index=False)
+    df_area.to_csv("/content/sfo_12_workspace_area.csv",index=False)
+    # repeated_gdf['lvl'] = repeated_gdf['lvl'].astype(str)
+    gdf_mod = pd.merge(gdf, df_agg[['Floor Name','lvl','Workspace Name', 'Workspace Type',
+                                    'Space_Capacity_label', 'Workspace_Capacity_Category',
+                                    'Monthly_Utilisation','Monthly_Occupancy','ApparentTemp(C)',
+                                    'ApparentTemp(C)_90th_percentile','Humidity(%)','Humidity(%)_90th_percentile',
+                                    'Temp(C)','Temp(C)_90th_percentile','Co2(ppm)','Co2(ppm)_90th_percentile']], left_on=['lvl','name'],
+                right_on=['lvl','Workspace Name'], how='left')
+
+    gdf_mod = pd.merge(gdf_mod, df_area[['lvl','Workspace Name','Area_Sqft']], left_on=['lvl','name'],
+                right_on=['lvl','Workspace Name'], how='left')
+
+    # gdf_mod = pd.merge(gdf_mod, df_co2_humidity_temp_agg, left_on=['lvl','name'],
+    #             right_on=['lvl','Workspace Name'], how='left')
+
+    gdf_mod = gdf_mod.loc[~np.logical_or(gdf_mod['sType'] == 'Floor Outline',
+                                        gdf_mod['type'] == 'marker'),].reset_index(drop=True)
+    # drop columns
+    del gdf_mod['Workspace Name_y']
+    del gdf_mod['Workspace Name_x']
+
+    return gdf_mod
 
 # Set your folder path here
 json_folder_path = "Data/access_point/"
@@ -669,7 +798,6 @@ selected_floor = st.sidebar.selectbox("Select Floor:", floor_options)
 # Show the DataFrame
 df_all_aps = load_json_files(json_folder_path)
 gdf_mod = geojson_load_data(selected_weekday,selected_hour)
-
 
 
 
@@ -987,7 +1115,7 @@ with tabA:
   with st.container():
       st.markdown(f"""
       <div style='padding: 1rem; background-color: #f0f8ff; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);'>
-          <h4 style='margin-bottom: 0.5rem;'>🔍 AI Insight</h4>
+          <h4 style='margin-bottom: 0.5rem;'>🔍 GenAI Summary</h4>
           <p style='font-size: 1rem;'>{insight_text1}</p>
           <h4 style='margin-top: 1rem; margin-bottom: 0.5rem;'>✅ Recommendation</h4>
           <p style='font-size: 1rem;'>{recommendation_text1}</p>
@@ -1095,7 +1223,7 @@ with tabB:
   with st.container():
       st.markdown(f"""
       <div style='padding: 1rem; background-color: #f0f8ff; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);'>
-          <h4 style='margin-bottom: 0.5rem;'>🔍 AI Insight</h4>
+          <h4 style='margin-bottom: 0.5rem;'>🔍 GenAI Summary</h4>
           <p style='font-size: 1rem;'>{insight_text2}</p>
           <h4 style='margin-top: 1rem; margin-bottom: 0.5rem;'>✅ Recommendation</h4>
           <p style='font-size: 1rem;'>{recommendation_text2}</p>
@@ -1205,7 +1333,7 @@ with tabC:
   with st.container():
       st.markdown(f"""
       <div style='padding: 1rem; background-color: #f0f8ff; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);'>
-          <h4 style='margin-bottom: 0.5rem;'>🔍 AI Insight</h4>
+          <h4 style='margin-bottom: 0.5rem;'>🔍 GenAI Summary</h4>
           <p style='font-size: 1rem;'>{insight_text3}</p>
           <h4 style='margin-top: 1rem; margin-bottom: 0.5rem;'>✅ Recommendation</h4>
           <p style='font-size: 1rem;'>{recommendation_text3}</p>
@@ -1312,7 +1440,7 @@ with tabD:
   with st.container():
       st.markdown(f"""
       <div style='padding: 1rem; background-color: #f0f8ff; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);'>
-          <h4 style='margin-bottom: 0.5rem;'>🔍 AI Insight</h4>
+          <h4 style='margin-bottom: 0.5rem;'>🔍 GenAI Summary</h4>
           <p style='font-size: 1rem;'>{insight_text4}</p>
           <h4 style='margin-top: 1rem; margin-bottom: 0.5rem;'>✅ Recommendation</h4>
           <p style='font-size: 1rem;'>{recommendation_text4}</p>
@@ -1420,7 +1548,7 @@ with tabE:
   with st.container():
       st.markdown(f"""
       <div style='padding: 1rem; background-color: #f0f8ff; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);'>
-          <h4 style='margin-bottom: 0.5rem;'>🔍 AI Insight</h4>
+          <h4 style='margin-bottom: 0.5rem;'>🔍 GenAI Summary</h4>
           <p style='font-size: 1rem;'>{insight_text5}</p>
           <h4 style='margin-top: 1rem; margin-bottom: 0.5rem;'>✅ Recommendation</h4>
           <p style='font-size: 1rem;'>{recommendation_text5}</p>
